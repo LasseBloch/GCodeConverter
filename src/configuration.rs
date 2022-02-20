@@ -18,7 +18,7 @@ impl Configuration {
             convert_gcode: convert_gcode,
             input_file: input_file.clone(),
             output_file: match output_file {
-                Some(file_name) => Configuration::gen_output_filename(file_name),
+                Some(file_name) => String::from(file_name),
                 // TODO: add logic to configure output name
                 None => Configuration::gen_output_filename(&input_file),
             },
