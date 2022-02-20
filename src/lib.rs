@@ -2,6 +2,7 @@ pub mod configuration;
 pub mod line_processor;
 use std::error::Error;
 use std::fs;
+use std::io::Write;
 use std::process;
 
 // TODO: Refactor or validate sanity
@@ -16,6 +17,16 @@ fn read_file(input_file: &str) -> Result<Vec<String>, Box<dyn Error>> {
     Ok(lines)
 }
 
+fn write_output_file(output_file: &str, content: Vec<String>) -> Result<(), Box<dyn Error>> {
+    let mut f = fs::File::create(output_file)?;
+
+    for line in content {
+        writeln!(f, "{}", line);
+    }
+
+    Ok(())
+}
+
 pub fn convert_file(conf: configuration::Configuration) {
     let mut lines = read_file(&conf.input_file()).unwrap_or_else(|err| {
         println!("Could not read file {}", err);
@@ -24,7 +35,9 @@ pub fn convert_file(conf: configuration::Configuration) {
 
     println!("{}", lines.len());
 
-    for line in lines {
-        println!("{}", line);
+    for mut line in &mut lines {
+        *line = line_processor::process_line(line);
     }
+
+    write_output_file(conf.output_file(), lines);
 }

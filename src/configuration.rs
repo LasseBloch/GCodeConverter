@@ -38,6 +38,10 @@ impl Configuration {
     pub fn input_file(&self) -> &str {
         return &self.input_file;
     }
+
+    pub fn output_file(&self) -> &str {
+        return &self.output_file;
+    }
 }
 
 #[cfg(test)]

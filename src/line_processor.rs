@@ -1,15 +1,15 @@
 use regex::Regex;
 
-pub fn process_line(s: &mut String) -> String {
+pub fn process_line(s: &String) -> String {
     let s = reformat_gcode(s);
     return s;
 }
 
-fn reformat_gcode(s: &mut String) -> String {
+fn reformat_gcode(s: &String) -> String {
     return g0x_to_gx(s);
 }
 
-fn g0x_to_gx(s: &mut String) -> String {
+fn g0x_to_gx(s: &String) -> String {
     let re = Regex::new(r"^[G][0]").unwrap();
     return String::from(re.replace(s, "G"));
 }
