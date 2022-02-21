@@ -1,4 +1,5 @@
 use regex::Regex;
+use lazy_static::lazy_static;
 
 pub fn process_line(s: &String) -> String {
     let s = reformat_gcode(s);
@@ -10,8 +11,10 @@ fn reformat_gcode(s: &String) -> String {
 }
 
 fn g0x_to_gx(s: &String) -> String {
-    let re = Regex::new(r"^[G][0]").unwrap();
-    return String::from(re.replace(s, "G"));
+    lazy_static! {
+        static ref RE: Regex = Regex::new(r"^[G][0]").unwrap();
+    }
+    return String::from(RE.replace(s, "G"));
 }
 
 #[cfg(test)]
