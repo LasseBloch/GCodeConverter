@@ -21,23 +21,25 @@ fn write_output_file(output_file: &str, content: Vec<String>) -> Result<(), Box<
     let mut f = fs::File::create(output_file)?;
 
     for line in content {
-        writeln!(f, "{}", line);
+        writeln!(f, "{}", line)?;
     }
 
     Ok(())
 }
 
 pub fn convert_file(conf: configuration::Configuration) {
-    let mut lines = read_file(&conf.input_file()).unwrap_or_else(|err| {
+    let lines = read_file(&conf.input_file()).unwrap_or_else(|err| {
         println!("Could not read file {}", err);
         process::exit(1);
     });
 
-    println!("{}", lines.len());
+    let modified_lines = lines
+        .iter()
+        .map(|line| line_processor::process_line(line))
+        .collect();
 
-    for mut line in &mut lines {
-        *line = line_processor::process_line(line);
-    }
-
-    write_output_file(conf.output_file(), lines);
+    write_output_file(conf.output_file(), modified_lines).unwrap_or_else(|err| {
+        println!("Could not write file {}", err);
+        process::exit(1);
+    });
 }
