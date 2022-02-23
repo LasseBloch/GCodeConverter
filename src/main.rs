@@ -12,12 +12,24 @@ fn main() {
         )
         .arg(arg!(-f --input_file <FILE> "Original G-code file"))
         .arg(arg!(-o --output_file <FILE> "Output file").required(false))
+        .arg(
+            arg!(-z --z_replace ... "Replace Z X with Y")
+                .takes_value(true)
+                .number_of_values(2),
+        )
         .get_matches();
 
     let replace_gcode = matches.is_present("replace_gcode");
     let input_file = matches.value_of("input_file").expect("required");
     let input_file = String::from(input_file);
     let output_file = matches.value_of("output_file");
+    println!(
+        "{:?}",
+        matches
+            .values_of("z_replace")
+            .map(|vals| vals.collect::<Vec<_>>())
+            .unwrap_or_default()
+    );
 
     let conf = configuration::Configuration::new(replace_gcode, input_file, output_file);
 

@@ -1,5 +1,5 @@
-use regex::Regex;
 use lazy_static::lazy_static;
+use regex::Regex;
 
 pub fn process_line(s: &String) -> String {
     let s = reformat_gcode(s);
