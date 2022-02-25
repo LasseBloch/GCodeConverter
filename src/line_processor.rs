@@ -1,20 +1,19 @@
 use lazy_static::lazy_static;
 use regex::Regex;
 
-pub fn process_line(s: &String) -> String {
-    let s = reformat_gcode(s);
-    return s;
+pub fn process_line(s: &str) -> String {
+    reformat_gcode(s)
 }
 
-fn reformat_gcode(s: &String) -> String {
-    return g0x_to_gx(s);
+fn reformat_gcode(s: &str) -> String {
+    g0x_to_gx(s)
 }
 
-fn g0x_to_gx(s: &String) -> String {
+fn g0x_to_gx(s: &str) -> String {
     lazy_static! {
         static ref RE: Regex = Regex::new(r"^[G][0]").unwrap();
     }
-    return String::from(RE.replace(s, "G"));
+    String::from(RE.replace(s, "G"))
 }
 
 #[cfg(test)]

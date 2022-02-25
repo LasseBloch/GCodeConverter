@@ -2,6 +2,7 @@ use regex::Regex;
 use std::ops::Add;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub struct Configuration {
     convert_gcode: bool,
     input_file: String,
@@ -15,7 +16,7 @@ impl Configuration {
         output_file: std::option::Option<&str>,
     ) -> Configuration {
         Configuration {
-            convert_gcode: convert_gcode,
+            convert_gcode,
             input_file: input_file.clone(),
             output_file: match output_file {
                 Some(file_name) => String::from(file_name),
@@ -30,17 +31,16 @@ impl Configuration {
         let re = Regex::new(r"\.(GCODE|gcode)$").unwrap();
         if re.is_match(input_filename) {
             return String::from(re.replace(input_filename, "_converted.gcode"));
-        } else {
-            return String::from(input_filename).add("_converted.gcode");
         }
+        String::from(input_filename).add("_converted.gcode")
     }
 
     pub fn input_file(&self) -> &str {
-        return &self.input_file;
+        &self.input_file
     }
 
     pub fn output_file(&self) -> &str {
-        return &self.output_file;
+        &self.output_file
     }
 }
 

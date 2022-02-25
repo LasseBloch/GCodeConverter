@@ -28,7 +28,7 @@ fn write_output_file(output_file: &str, content: Vec<String>) -> Result<(), Box<
 }
 
 pub fn convert_file(conf: configuration::Configuration) {
-    let lines = read_file(&conf.input_file()).unwrap_or_else(|err| {
+    let lines = read_file(conf.input_file()).unwrap_or_else(|err| {
         println!("Could not read file {}", err);
         process::exit(1);
     });
