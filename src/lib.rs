@@ -1,5 +1,6 @@
 pub mod configuration;
 pub mod line_processor;
+pub mod replace_movement_cmd;
 use std::error::Error;
 use std::fs;
 use std::io::Write;

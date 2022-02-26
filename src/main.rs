@@ -1,5 +1,5 @@
 use clap::{arg, Command};
-use gcode_converter::configuration;
+use gcode_converter::{configuration, replace_movement_cmd::ReplaceMovementCmd};
 
 fn main() {
     let matches = Command::new("GCode converter")
@@ -23,13 +23,21 @@ fn main() {
     let input_file = matches.value_of("input_file").expect("required");
     let input_file = String::from(input_file);
     let output_file = matches.value_of("output_file");
-    println!(
-        "{:?}",
-        matches
-            .values_of("z_replace")
-            .map(|vals| vals.collect::<Vec<_>>())
-            .unwrap_or_default()
-    );
+    let mut movement_values_to_be_replaced = Vec::new();
+    let mut z_replace = matches
+        .values_of("z_replace")
+        .map(|vals| vals.collect::<Vec<_>>())
+        .unwrap_or_default();
+
+    if !z_replace.is_empty() {
+        movement_values_to_be_replaced.push("Z");
+        movement_values_to_be_replaced.append(&mut z_replace);
+        drop(z_replace);
+    }
+
+    let z_replace_cmd = ReplaceMovementCmd::new(movement_values_to_be_replaced);
+    
+    println!("{:?}", z_replace_cmd);
 
     let conf = configuration::Configuration::new(replace_gcode, input_file, output_file);
 

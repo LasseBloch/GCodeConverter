@@ -16,6 +16,11 @@ fn g0x_to_gx(s: &str) -> String {
     String::from(RE.replace(s, "G"))
 }
 
+// fn replace_movement_value(s: &str) -> String
+// {
+//
+// }
+
 #[cfg(test)]
 mod tests {
     use super::*;
