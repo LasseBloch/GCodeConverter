@@ -1,12 +1,14 @@
+use crate::replace_movement_cmd::ReplaceMovementCmd;
 use regex::Regex;
 use std::ops::Add;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 #[allow(dead_code)]
 pub struct Configuration {
     convert_gcode: bool,
     input_file: String,
     output_file: String,
+    replace_cmds: Vec<ReplaceMovementCmd>,
 }
 
 impl Configuration {
@@ -23,6 +25,7 @@ impl Configuration {
                 // TODO: add logic to configure output name
                 None => Configuration::gen_output_filename(&input_file),
             },
+            replace_cmds: Vec::new(),
         }
     }
 
@@ -41,6 +44,14 @@ impl Configuration {
 
     pub fn output_file(&self) -> &str {
         &self.output_file
+    }
+
+    pub fn replace_cmds(&self) -> &Vec<ReplaceMovementCmd> {
+        &self.replace_cmds
+    }
+
+    pub fn add_replace_cmd(&mut self, cmd: ReplaceMovementCmd) {
+        self.replace_cmds.push(cmd);
     }
 }
 

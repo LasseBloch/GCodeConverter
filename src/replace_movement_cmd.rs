@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ReplaceMovementCmd {
     axis: String,
     old_val: String,
@@ -18,19 +18,15 @@ impl ReplaceMovementCmd {
         })
     }
 
-    pub fn axis(&self) -> &str
-    {
+    pub fn axis(&self) -> &str {
         &self.axis
     }
 
-    pub fn old_val(&self) -> &str
-    {
+    pub fn old_val(&self) -> &str {
         &self.old_val
     }
 
-    pub fn new_val(&self) -> &str
-    {
+    pub fn new_val(&self) -> &str {
         &self.new_val
     }
-
 }

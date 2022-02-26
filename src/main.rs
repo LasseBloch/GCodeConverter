@@ -36,7 +36,7 @@ fn main() {
     }
 
     let z_replace_cmd = ReplaceMovementCmd::new(movement_values_to_be_replaced);
-    
+
     println!("{:?}", z_replace_cmd);
 
     let conf = configuration::Configuration::new(replace_gcode, input_file, output_file);
