@@ -29,4 +29,11 @@ impl ReplaceMovementCmd {
     pub fn new_val(&self) -> &str {
         &self.new_val
     }
+
+    pub fn gen_replace_strings(&self) -> (String, String) {
+        (
+            (self.axis.clone() + &self.old_val),
+            self.axis.clone() + &self.new_val,
+        )
+    }
 }

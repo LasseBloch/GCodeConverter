@@ -34,12 +34,14 @@ pub fn convert_file(conf: configuration::Configuration) {
         process::exit(1);
     });
 
+    let line_processor = line_processor::LineProcessor::new(conf);
+
     let modified_lines = lines
         .iter()
-        .map(|line| line_processor::process_line(line))
+        .map(|line| line_processor.process_line(line))
         .collect();
 
-    write_output_file(conf.output_file(), modified_lines).unwrap_or_else(|err| {
+    write_output_file(line_processor.conf().output_file(), modified_lines).unwrap_or_else(|err| {
         println!("Could not write file {}", err);
         process::exit(1);
     });

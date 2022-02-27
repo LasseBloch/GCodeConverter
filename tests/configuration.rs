@@ -24,11 +24,11 @@ mod tests {
     fn give_me_the_cmd_back() {
         let mut conf = Configuration::new(false, "test".to_string(), None);
         let cmd = ReplaceMovementCmd::new(vec!["X", "1", "2"]).unwrap();
-        let cmdCopy = cmd.clone();
+        let cmd_copy = cmd.clone();
         conf.add_replace_cmd(cmd);
 
         // Get cmd back
         let cmd = conf.replace_cmds()[0].clone();
-        assert_eq!(cmd, cmdCopy);
+        assert_eq!(cmd, cmd_copy);
     }
 }

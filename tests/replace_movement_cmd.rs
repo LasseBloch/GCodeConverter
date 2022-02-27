@@ -22,4 +22,14 @@ mod tests {
         let cmd = ReplaceMovementCmd::new(v);
         assert!(cmd.is_err());
     }
+
+    #[test]
+    fn replace_strings_from_cmd() {
+        let v = vec!["Z", "10", "20"];
+        let cmd = ReplaceMovementCmd::new(v).unwrap();
+        let (to_be_replaced, replacement) = cmd.gen_replace_strings();
+
+        assert_eq!(to_be_replaced, "Z10");
+        assert_eq!(replacement, "Z20")
+    }
 }

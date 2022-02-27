@@ -33,13 +33,12 @@ fn main() {
         movement_values_to_be_replaced.push("Z");
         movement_values_to_be_replaced.append(&mut z_replace);
         drop(z_replace);
-    }
+    };
 
-    let z_replace_cmd = ReplaceMovementCmd::new(movement_values_to_be_replaced);
+    let mut conf = configuration::Configuration::new(replace_gcode, input_file, output_file);
 
-    println!("{:?}", z_replace_cmd);
-
-    let conf = configuration::Configuration::new(replace_gcode, input_file, output_file);
+    let z_replace_cmd = ReplaceMovementCmd::new(movement_values_to_be_replaced).unwrap();
+    conf.add_replace_cmd(z_replace_cmd);
 
     gcode_converter::convert_file(conf);
 }

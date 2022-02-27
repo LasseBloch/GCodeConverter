@@ -38,6 +38,10 @@ impl Configuration {
         String::from(input_filename).add("_converted.gcode")
     }
 
+    pub fn convert_gcode(&self) -> bool {
+        self.convert_gcode
+    }
+
     pub fn input_file(&self) -> &str {
         &self.input_file
     }
