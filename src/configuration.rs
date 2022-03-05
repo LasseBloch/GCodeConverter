@@ -58,27 +58,3 @@ impl Configuration {
         self.replace_cmds.push(cmd);
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn test_output_file_gen_filename_with_gcode_extension() {
-        assert_eq!(
-            Configuration::gen_output_filename("thing.gcode"),
-            "thing_converted.gcode"
-        );
-        assert_eq!(
-            Configuration::gen_output_filename("thing.GCODE"),
-            "thing_converted.gcode"
-        );
-    }
-
-    #[test]
-    fn test_output_file_gen_filename_without_gcode_extension() {
-        assert_eq!(
-            Configuration::gen_output_filename("thing.exe"),
-            "thing.exe_converted.gcode"
-        );
-    }
-}
