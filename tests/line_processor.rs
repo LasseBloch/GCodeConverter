@@ -42,5 +42,10 @@ mod tests {
         let mut conf = Configuration::new(true, "test".to_string(), None);
         let cmd = ReplaceMovementCmd::new(vec!["Z", "1.234", "1.000"]).unwrap();
         conf.add_replace_cmd(cmd);
+        let line_processor = line_processor::LineProcessor::new(conf);
+        assert_eq!(
+            line_processor.process_line(&mut String::from("G1 Z1.234000")),
+            "G1 Z1.000000"
+        );
     }
 }
